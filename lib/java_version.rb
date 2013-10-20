@@ -1,3 +1,5 @@
+require 'java_version/update_number'
+
 class JavaVersion
   include Comparable
 
