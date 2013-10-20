@@ -22,6 +22,6 @@ describe "Validate Java Version" do
 
   describe "given JDK123u0" do
     let(:version) { "JDK123u0" }
-    it { expect(subject).to be_false }
+    it { expect(subject).to be_true }
   end
 end
