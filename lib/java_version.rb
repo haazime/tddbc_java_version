@@ -12,7 +12,8 @@ class JavaVersion
 
     def parse(version)
       raise ArgumentError.new("invalid version `#{version}`") unless valid?(version)
-      new(*version.scan(/\d+/).collect(&:to_i))
+      (family_number, update_number) = version.scan(/\d+/).collect(&:to_i)
+      new(family_number, UpdateNumber.new(update_number))
     end
   end
 
@@ -24,34 +25,29 @@ class JavaVersion
   end
 
   def next_limited_update
-    self.class.new(
-      @family_number,
-      20 * (@update_number / 20 + 1)
-    )
+    next_version { next_limited_update }
   end
 
   def next_critical_patch_update
-    self.class.new(
-      @family_number,
-      (5 * (@update_number / 5 + 1)).tap do |x|
-        break x + 1 if x % 2 == 0
-      end
-    )
+    next_version { next_critical_patch_update }
   end
 
   def next_security_alert
-    self.class.new(
-      @family_number,
-      (@update_number + 1).tap do |x|
-        break x + 2 if x % 20 == 0 and x % 5 == 0
-        break x + 1 if x % 5 == 0
-      end
-    )
+    next_version { next_security_alert }
   end
 
   def <=>(other)
     (self.family_number <=> other.family_number).tap do |x|
       break self.update_number <=> other.update_number if x == 0
     end
+  end
+
+private
+
+  def next_version(&block)
+    self.class.new(
+      @family_number,
+      @update_number.instance_eval(&block)
+    )
   end
 end
