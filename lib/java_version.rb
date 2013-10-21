@@ -1,19 +1,32 @@
 require 'java_version/update_number'
+require 'java_version/core_ext/string'
 
 class JavaVersion
   include Comparable
 
   class << self
 
-    def valid?(version)
-      return false unless /^JDK\d+u\d+$/ =~ version
+    def valid?(string)
+      return false unless string.java_version?
       return true
     end
 
-    def parse(version)
-      raise ArgumentError.new("invalid version `#{version}`") unless valid?(version)
-      (family_number, update_number) = version.scan(/\d+/).collect(&:to_i)
-      new(family_number, UpdateNumber.new(update_number))
+    def parse(string)
+      unless valid?(string)
+        raise_error(string)
+      else
+        create(string)
+      end
+    end
+
+  private
+
+    def create(string)
+      new(string.family_number, UpdateNumber.new(string.update_number))
+    end
+
+    def raise_error(string)
+      raise ArgumentError.new("invalid version `#{string}`")
     end
   end
 
