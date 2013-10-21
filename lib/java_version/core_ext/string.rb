@@ -16,7 +16,7 @@ class String
 private
 
   def version_numbers
-    @_java_version_numbers = self.scan(/^jdk(\d+)u(\d+)$/i)
+    @_java_version_numbers ||= self.scan(/^jdk(\d+)u(\d+)$/i)
                                .flatten
                                .map(&:to_i)
   end
