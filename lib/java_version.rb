@@ -1,7 +1,6 @@
 require 'java_version/core_ext/string'
 
 class JavaVersion
-  autoload :UpdateNumber,         'java_version/update_number'
   autoload :LimitedUpdate,        'java_version/updates/limited_update'
   autoload :CriticalPatchUpdate,  'java_version/updates/critical_patch_update'
   autoload :SecurityAlert,        'java_version/updates/security_alert'
@@ -26,7 +25,7 @@ class JavaVersion
   private
 
     def create(string)
-      new(string.family_number, UpdateNumber.new(string.update_number))
+      new(string.family_number, string.update_number)
     end
 
     def raise_error(string)
@@ -64,7 +63,7 @@ private
   def version_up(update)
     self.class.new(
       @family_number,
-      @update_number.version_up(update)
+      update.next_update_number(update_number)
     )
   end
 end
