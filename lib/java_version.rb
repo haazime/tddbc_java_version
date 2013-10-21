@@ -1,5 +1,5 @@
-require 'java_version/update_number'
 require 'java_version/core_ext/string'
+require 'java_version/update_number'
 
 class JavaVersion
   include Comparable
@@ -35,15 +35,15 @@ class JavaVersion
   end
 
   def next_limited_update
-    next_version { next_limited_update }
+    version_up { next_limited_update }
   end
 
   def next_critical_patch_update
-    next_version { next_critical_patch_update }
+    version_up { next_critical_patch_update }
   end
 
   def next_security_alert
-    next_version { next_security_alert }
+    version_up { next_security_alert }
   end
 
   def <=>(other)
@@ -54,7 +54,7 @@ class JavaVersion
 
 private
 
-  def next_version(&block)
+  def version_up(&block)
     self.class.new(
       @family_number,
       @update_number.instance_eval(&block)
