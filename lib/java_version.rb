@@ -8,15 +8,12 @@ class JavaVersion
 
     def valid?(string)
       return false unless string.java_version?
-      return true
+      true
     end
 
     def parse(string)
-      unless valid?(string)
-        raise_error(string)
-      else
-        create(string)
-      end
+      return raise_error unless valid?(string)
+      create(string)
     end
 
   private
