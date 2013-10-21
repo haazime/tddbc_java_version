@@ -1,6 +1,7 @@
 require 'java_version/core_ext/string'
 
 class JavaVersion
+  autoload :Specification,        'java_version/specification'
   autoload :LimitedUpdate,        'java_version/updates/limited_update'
   autoload :CriticalPatchUpdate,  'java_version/updates/critical_patch_update'
   autoload :SecurityAlert,        'java_version/updates/security_alert'
@@ -13,13 +14,19 @@ class JavaVersion
   class << self
 
     def valid?(string)
-      return false unless string.java_version?
-      true
+      if Specification.satisfied_by?(string)
+        true
+      else
+        false
+      end
     end
 
     def parse(string)
-      return raise_error unless valid?(string)
-      create(string)
+      if valid?(string)
+        create(string)
+      else
+        raise parse_error(string)
+      end
     end
 
   private
@@ -28,8 +35,8 @@ class JavaVersion
       new(string.family_number, string.update_number)
     end
 
-    def raise_error(string)
-      raise ArgumentError.new("invalid version `#{string}`")
+    def parse_error(string)
+      ArgumentError.new("Invalid java version string `#{string}`")
     end
   end
 

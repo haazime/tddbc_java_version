@@ -8,11 +8,6 @@ class String
     version_numbers[1]
   end
 
-  def java_version?
-    version_numbers.size == 2 &&
-      version_numbers.all? {|n| n >= 0 }
-  end
-
 private
 
   def version_numbers
