@@ -29,7 +29,7 @@ describe "Next Java Version" do
     end
 
     it do
-      expect(current.next_security_alert.update_number).to eq(46)
+      expect(current.next_security_alert.update_number).to eq(45)
     end
   end
 
@@ -41,7 +41,7 @@ describe "Next Java Version" do
     end
 
     it do
-      expect(current.next_security_alert.update_number).to eq(62)
+      expect(current.next_security_alert.update_number).to eq(61)
     end
   end
 
@@ -53,7 +53,7 @@ describe "Next Java Version" do
     end
 
     it do
-      expect(current.next_security_alert.update_number).to eq(72)
+      expect(current.next_security_alert.update_number).to eq(70)
     end
   end
 end
