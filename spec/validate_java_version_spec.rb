@@ -59,4 +59,9 @@ describe "Validate Java Version" do
     let(:version) { "JDKu45" }
     it { expect(subject).to be_false }
   end
+
+  describe "given jdk7u45" do
+    let(:version) { "jdk7u45" }
+    it { expect(subject).to be_false }
+  end
 end
