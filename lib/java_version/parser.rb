@@ -1,25 +1,18 @@
 class JavaVersion
-  class Parser
-
-    def initialize(specification)
-      @specification = specification
-    end
+  module Parser
+    extend self
 
     def parse(string)
-      {
-        family_number: family_number(string),
-        update_number: update_number(string)
-      }
-    end
-
-  private
-
-    def family_number(string)
-      @specification.extract_family_number(string)
-    end
-
-    def update_number(string)
-      @specification.extract_update_number(string)
+      string.to_s.scan(/^(.+?)(\d+?)(u)(\d+?)$/)
+        .flatten
+        .tap do |m|
+          break {
+            name: m[0],
+            family_number: m[1],
+            separator: m[2],
+            update_number: m[3]
+          }
+        end
     end
   end
 end

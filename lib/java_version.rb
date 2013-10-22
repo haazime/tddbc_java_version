@@ -12,12 +12,17 @@ class JavaVersion
   class << self
 
     def valid?(string)
-      Specification.satisfied_by?(string)
+      parse(string)
+    rescue ArgumentError
+      false
+    else
+      true
     end
 
     def parse(string)
-      if valid?(string)
-        create(string, Parser.new(Specification))
+      version = Parser.parse(string)
+      if Specification.satisfied_by?(version)
+        create(version)
       else
         raise parse_error(string)
       end
@@ -25,9 +30,8 @@ class JavaVersion
 
   private
 
-    def create(string, parser)
-      version = parser.parse(string)
-      new(version[:family_number], version[:update_number])
+    def create(version)
+      new(version[:family_number].to_i, version[:update_number].to_i)
     end
 
     def parse_error(string)
