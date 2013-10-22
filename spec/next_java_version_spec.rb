@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "Next Java Version" do
-  describe "when current is JDK7u45" do
+  context "when current is JDK7u45" do
     let(:current) { JavaVersion.parse("JDK7u45") }
 
     it do
@@ -17,7 +17,7 @@ describe "Next Java Version" do
     end
   end
 
-  describe "when current is JDK7u44" do
+  context "when current is JDK7u44" do
     let(:current) { JavaVersion.parse("JDK7u44") }
 
     it do
@@ -33,7 +33,7 @@ describe "Next Java Version" do
     end
   end
 
-  describe "when current is JDK7u59" do
+  context "when current is JDK7u59" do
     let(:current) { JavaVersion.parse("JDK7u59") }
 
     it do
@@ -45,7 +45,7 @@ describe "Next Java Version" do
     end
   end
 
-  describe "when current is JDK7u69" do
+  context "when current is JDK7u69" do
     let(:current) { JavaVersion.parse("JDK7u69") }
 
     it do
