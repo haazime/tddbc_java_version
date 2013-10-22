@@ -3,7 +3,7 @@ class JavaVersion
     extend self
 
     def parse(string)
-      string.to_s.scan(/^(.+?)(\d+?)(u)(\d+?)$/)
+      string.to_s.scan(/^(.+?)(\d+?)(.)(\d+?)$/)
         .flatten
         .tap do |m|
           break {
