@@ -2,7 +2,7 @@ class JavaVersion
   module Specification
     extend self
 
-    @@regexp = /^jdk(\d+)u((?:\d)|(?:[1-9][0-9]+))$/i
+    @@regexp = /^JDK(\d+)u((?:\d)|(?:[1-9][0-9]+))$/
 
     def satisfied_by?(candidate)
       @@regexp =~ candidate ? true : false

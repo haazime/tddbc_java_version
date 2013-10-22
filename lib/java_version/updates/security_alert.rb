@@ -3,8 +3,7 @@ class JavaVersion
 
     def self.next_update_number(current)
       (current + 1).tap do |x|
-        break x + 2 if x % 5 == 0 and x % 2 == 0
-        break x + 1 if x % 5 == 0 and x % 2 != 0
+        break x + 1 if x % 20 == 0
       end
     end
   end
