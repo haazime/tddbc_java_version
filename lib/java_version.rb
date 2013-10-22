@@ -12,11 +12,7 @@ class JavaVersion
   class << self
 
     def valid?(string)
-      if Specification.satisfied_by?(string)
-        true
-      else
-        false
-      end
+      Specification.satisfied_by?(string)
     end
 
     def parse(string)
