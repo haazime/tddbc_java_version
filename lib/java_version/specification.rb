@@ -1,12 +1,25 @@
 class JavaVersion
   module Specification
+    extend self
 
-    def self.satisfied_by?(candidate)
-      return false unless candidate.family_number
-      return false unless candidate.update_number
-      return false unless candidate.family_number >= 0
-      return false unless candidate.update_number >= 0
-      true
+    @@regexp = /^jdk(\d+)u(\d+)$/i
+
+    def satisfied_by?(candidate)
+      @@regexp =~ candidate ? true : false
+    end
+
+    def extract_family_number(string)
+      version_numbers(string, 1).to_i
+    end
+
+    def extract_update_number(string)
+      version_numbers(string, 2).to_i
+    end
+
+  private
+
+    def version_numbers(string, matched_number)
+      string[@@regexp, matched_number]
     end
   end
 end

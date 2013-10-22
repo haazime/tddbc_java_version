@@ -1,12 +1,10 @@
-require 'java_version/core_ext/string'
-
 class JavaVersion
   autoload :Specification,        'java_version/specification'
+  autoload :Parser,               'java_version/parser'
   autoload :LimitedUpdate,        'java_version/updates/limited_update'
   autoload :CriticalPatchUpdate,  'java_version/updates/critical_patch_update'
   autoload :SecurityAlert,        'java_version/updates/security_alert'
 end
-
 
 class JavaVersion
   include Comparable
@@ -23,7 +21,7 @@ class JavaVersion
 
     def parse(string)
       if valid?(string)
-        create(string)
+        create(string, Parser.new(Specification))
       else
         raise parse_error(string)
       end
@@ -31,8 +29,9 @@ class JavaVersion
 
   private
 
-    def create(string)
-      new(string.family_number, string.update_number)
+    def create(string, parser)
+      version = parser.parse(string)
+      new(version[:family_number], version[:update_number])
     end
 
     def parse_error(string)
@@ -70,7 +69,7 @@ private
   def version_up(update)
     self.class.new(
       @family_number,
-      update.next_update_number(update_number)
+      update.next_update_number(@update_number)
     )
   end
 end
