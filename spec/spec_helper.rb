@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'java_version'
 
 RSpec.configure do |config|
